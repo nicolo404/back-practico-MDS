@@ -32,6 +32,21 @@ const User = require("../Models/ModelUser");
     }
   }
 
+  const obtenerUsuario = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const usuario = await User.findById(id);
+      return res.status(200).send({
+        usuario,
+      });
+    } catch (error) {
+      return res.status(500).send({
+        mensaje: "Error al obtener el usuario",
+      });
+    }
+  }
+    
+
   const eliminarUsuario = async (req, res) => {
     const { id } = req.params;
     try {
@@ -65,4 +80,4 @@ const User = require("../Models/ModelUser");
     }
   }
 
-module.exports = { crearUsuario, obtenerUsuarios, eliminarUsuario, actualizarUsuario};
+module.exports = { crearUsuario, obtenerUsuarios, obtenerUsuario, eliminarUsuario, actualizarUsuario}
