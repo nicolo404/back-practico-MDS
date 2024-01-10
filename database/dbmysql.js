@@ -1,46 +1,42 @@
-
 const mysql = require('mysql2');
 
-// Configuración de la conexión a la base de datos
-const connection = mysql.createConnection({
+// Configuración del pool de conexiones
+const pool = mysql.createPool({
   host: '10.200.5.34',
   user: 'nsilva',
   password: 'NicoSilva2024@',
-  database: 'entradas_test'
+  database: 'entradas_test',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
-// Función para conectar a la base de datos
-function connectToDatabase() {
+const getConnection = () => {
   return new Promise((resolve, reject) => {
-    connection.connect((err) => {
+    pool.getConnection((err, connection) => {
+      if (err) {
+        reject(err);
+        console.log('Error al conectar a la base de datos');
+      } else {
+        resolve(connection);
+        console.log('Conexión exitosa a la base de datos');
+      }
+    });
+  });
+}
+
+function getTables() {
+  return new Promise((resolve, reject) => {
+    pool.query('SHOW TABLES', (err, result) => {
       if (err) {
         reject(err);
       } else {
-        console.log('Conexión exitosa a la base de datos MySQL');
-        resolve();
+        const tables = result.map(row => Object.values(row)[0]);
+        resolve(tables);
+        console.log('Tablas de la base de datos:', tables);
       }
     });
-  });  
+  });
 }
 
-// Función para realizar consultas a la base de datos
-function getTables() {
-    return new Promise((resolve, reject) => {
-      const query = 'SHOW TABLES';
-      connection.query(query, (error, results, fields) => {
-        if (error) {
-          reject(error);
-        } else {
-          const tables = results.map(result => result[Object.keys(result)[0]]);
-          resolve(tables);
-          console.log('Tablas en la base de datos:', tables);
-        }
-      });
-    });
-  }
-
-// Exportar la función de conexión para ser utilizada en otros archivos
-module.exports = {
-  connectToDatabase,
-  getTables    
-};
+module.exports = { getConnection , getTables};
