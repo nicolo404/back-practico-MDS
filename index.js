@@ -1,33 +1,37 @@
-//const { conexion } = require("./database/db");
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const routesUser = require("./Routes/RoutesUser");
-const { connectToDatabase, getTables } = require('./database/dbmysql');
+const routesTbl_usuario = require("./Routes/tbl_usuarioRoutes");
+const {getConnection, getTables} = require("./database/dbmysql");
 
-console.log("App de node Arrancada")
-//conectar a la base de datos mysql
-connectToDatabase();
 // configurar dotenv
 dotenv.config();
 
 // crear servidor de nodejs con express
 const app = express();
 const puerto = 3001;
-//configurar el cors
+
+// Configurar el cors
 app.use(cors());
-// middleware convertir body a json
+
+// Middleware convertir body a JSON
 app.use(express.json());
 app.options("*", cors());
 app.use(express.urlencoded({ extended: true }));
 
-//ruta con controlladores
+// Rutas con controladores
 app.use("/api", routesUser);
+app.use("/api", routesTbl_usuario);
 
-// crear servidor y escuchar peticiones http
-app.listen(puerto, () => {
+// Conectar a la base de datos MySQL
+getConnection().then(() => {
+  // Iniciar el servidor y escuchar peticiones HTTP
+  app.listen(puerto, () => {
     console.log("Servidor corriendo en el puerto " + puerto);
+  });
+}).catch((error) => {
+  console.error('Error al conectar a la base de datos:', error);
 });
 
-// Función para realizar consultas a la base de datos
-getTables();
+getTables()
