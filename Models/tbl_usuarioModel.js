@@ -51,7 +51,17 @@ class Tbl_usuario {
     });
   }
 
-  
+  update(itemId, updatedItem, callback) {
+    getConnection().then((connection) => {
+      connection.query('UPDATE tbl_usuario SET ? WHERE I_IDPERFIL = ?', [updatedItem, itemId], (err, result) => {
+        connection.release();
+        callback(err, result);
+      });
+    }).catch((error) => {
+      callback(error, null);
+    });  
   }
+  
+}
   
   module.exports = new Tbl_usuario();

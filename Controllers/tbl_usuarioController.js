@@ -50,6 +50,7 @@ class tbl_usuarioController {
     update(req, res) {
       const itemId = req.params.id;
       const updatedItem = req.body;
+      console.log("id: "+itemId+" updatedItem: "+updatedItem);
       Tbl_usuarioModel.update(itemId, updatedItem, (err, result) => {
         if (err) {
           res.status(500).send(`Error al actualizar el elemento con ID ${itemId}`);
