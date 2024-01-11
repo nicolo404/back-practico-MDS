@@ -9,13 +9,14 @@ class tbl_usuarioController {
           res.status(500).send('Error al obtener los elementos');
         }
       }
-  
+
     getById(req, res) {
       const itemId = req.params.id;
       Tbl_usuarioModel.getById(itemId, (err, result) => {
         if (err) {
           res.status(500).send(`Error al obtener el elemento con ID ${itemId}`);
         } else {
+          console.log(result);
           res.json(result[0]);
         }
       });
