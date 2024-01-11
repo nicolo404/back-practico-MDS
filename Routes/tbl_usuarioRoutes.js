@@ -12,6 +12,9 @@ router.post('/crear-tbl_usuario', tbl_usuarioController.create);
 router.delete('/delete-tbl_usuario/:id', (req, res) => {
     tbl_usuarioController.delete(req, res);
   });
+router.put('/update-tbl_usuario/:id', (req, res) => {
+    tbl_usuarioController.update(req, res);
+  });
 
 
 module.exports = router;
