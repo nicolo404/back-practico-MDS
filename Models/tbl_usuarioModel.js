@@ -29,17 +29,29 @@ class Tbl_usuario {
     });
   }
   
-    create(newItem, callback) {
-      getConnection.query('INSERT INTO tbl_avisomail SET ?', newItem, callback);
-    }
+  create(newItem, callback) {
+    getConnection().then((connection) => {
+      connection.query('INSERT INTO tbl_usuario SET ?', newItem, (err, result) => {
+        connection.release();
+        callback(err, result);
+      });
+    }).catch((error) => {
+      callback(error, null);
+    });
+  }
+
+  delete(itemId, callback) {
+    getConnection().then((connection) => {
+      connection.query('DELETE FROM tbl_usuario WHERE I_IDPERFIL = ?', [itemId], (err, result) => {
+        connection.release();
+        callback(err, result);
+      });
+    }).catch((error) => {
+      callback(error, null);
+    });
+  }
+
   
-    update(itemId, updatedItem, callback) {
-      getConnection.query('UPDATE tbl_avisomail SET ? WHERE id = ?', [updatedItem, itemId], callback);
-    }
-  
-    delete(itemId, callback) {
-      getConnection.query('DELETE FROM tbl_avisomail WHERE id = ?', [itemId], callback);
-    }
   }
   
   module.exports = new Tbl_usuario();
