@@ -29,7 +29,6 @@ getConnection().then(() => {
   // Iniciar el servidor y escuchar peticiones HTTP
   app.listen(puerto, () => {
     console.log("Servidor corriendo en el puerto " + puerto);
-    console.log("prueba gitlab y github");
   });
 }).catch((error) => {
   console.error('Error al conectar a la base de datos:', error);
