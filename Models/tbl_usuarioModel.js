@@ -17,9 +17,17 @@ class Tbl_usuario {
       });
     });
   }
-    getById(itemId, callback) {
-      getConnection.query('SELECT * FROM tbl_avisomail WHERE id = ?', [itemId], callback);
-    }
+  getById(itemId, callback) {
+    console.log(itemId);
+    getConnection().then((connection) => {
+      connection.query('SELECT * FROM tbl_usuario WHERE I_IDPERFIL = ?', [itemId], (err, result) => {
+        connection.release();
+        callback(err, result);
+      });
+    }).catch((error) => {
+      callback(error, null);
+    });
+  }
   
     create(newItem, callback) {
       getConnection.query('INSERT INTO tbl_avisomail SET ?', newItem, callback);
