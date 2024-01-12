@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const routesUser = require("./Routes/RoutesUser");
 const routesTbl_usuario = require("./Routes/tbl_usuarioRoutes");
 const routesTbl_tipoentrada = require("./Routes/tbl_tipoentradaRoutes");
+const routesTbl_categoriaentrada = require("./Routes/tbl_categoriaentradaRoutes");
 const {getConnection, getTables} = require("./database/dbmysql");
 
 // configurar dotenv
@@ -25,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", routesUser);
 app.use("/api", routesTbl_usuario);
 app.use("/api", routesTbl_tipoentrada);
-
+app.use("/api", routesTbl_categoriaentrada);
 // Conectar a la base de datos MySQL
 getConnection().then(() => {
   // Iniciar el servidor y escuchar peticiones HTTP
