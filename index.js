@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const routesUser = require("./Routes/RoutesUser");
 const routesTbl_usuario = require("./Routes/tbl_usuarioRoutes");
+const routesTbl_tipoentrada = require("./Routes/tbl_tipoentradaRoutes");
 const {getConnection, getTables} = require("./database/dbmysql");
 
 // configurar dotenv
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 // Rutas con controladores
 app.use("/api", routesUser);
 app.use("/api", routesTbl_usuario);
+app.use("/api", routesTbl_tipoentrada);
 
 // Conectar a la base de datos MySQL
 getConnection().then(() => {
