@@ -1,11 +1,11 @@
 const getConnection = require("../database/dbmysql").getConnection;
 
-class Tbl_categoriaentrada {
+class Tbl_supervisor {
     getAll() {
         return new Promise((resolve, reject) => {
         getConnection()
             .then((connection) => {
-            connection.query("SELECT * FROM tbl_categoriaentrada", (err, result) => {
+            connection.query("SELECT * FROM tbl_supervisor", (err, result) => {
                 connection.release();
                 if (err) {
                 reject(err);
@@ -89,4 +89,4 @@ class Tbl_categoriaentrada {
     }
 }
 
-module.exports = new Tbl_categoriaentrada();
+module.exports = new Tbl_supervisor();
