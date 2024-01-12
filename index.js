@@ -27,8 +27,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", routesUser);
 app.use("/api", routesTbl_usuario);
 app.use("/api", routesTbl_tipoentrada);
+app.use("/api", routesTbl_categoriaentrada);
 app.use("/api", routesTbl_supervisor);
-app.use
 // Conectar a la base de datos MySQL
 getConnection().then(() => {
   // Iniciar el servidor y escuchar peticiones HTTP
