@@ -7,6 +7,7 @@ const routesTbl_tipoentrada = require("./Routes/tbl_tipoentradaRoutes");
 const routesTbl_categoriaentrada = require("./Routes/tbl_categoriaentradaRoutes");
 const routesTbl_supervisor = require("./Routes/tbl_supervisorRoutes");
 const routesTbl_avisomail = require("./Routes/tbl_avisomailRoutes");
+const routerTbl_parametro = require("./Routes/tbl_parametroRoutes");  
 const {getConnection, getTables} = require("./database/dbmysql");
 
 // configurar dotenv
@@ -31,6 +32,7 @@ app.use("/api", routesTbl_tipoentrada);
 app.use("/api", routesTbl_categoriaentrada);
 app.use("/api", routesTbl_supervisor);
 app.use("/api", routesTbl_avisomail);
+app.use("/api", routerTbl_parametro);
 // Conectar a la base de datos MySQL
 getConnection().then(() => {
   // Iniciar el servidor y escuchar peticiones HTTP

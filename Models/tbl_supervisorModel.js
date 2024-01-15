@@ -24,7 +24,7 @@ class Tbl_supervisor {
         getConnection()
         .then((connection) => {
             connection.query(
-            "SELECT * FROM tbl_tipoentrada WHERE I_IDTIPOENTRADA = ?",
+            "SELECT * FROM tbl_supervisor WHERE I_IDTIPOENTRADA = ?",
             [itemId],
             (err, result) => {
                 connection.release();
@@ -41,7 +41,7 @@ class Tbl_supervisor {
         getConnection()
         .then((connection) => {
             connection.query(
-            "INSERT INTO tbl_tipoentrada SET ?",
+            "INSERT INTO tbl_supervisor SET ?",
             newItem,
             (err, result) => {
                 connection.release();
@@ -58,7 +58,7 @@ class Tbl_supervisor {
         getConnection()
         .then((connection) => {
             connection.query(
-            "DELETE FROM tbl_tipoentrada WHERE I_IDTIPOENTRADA = ?",
+            "DELETE FROM tbl_supervisor WHERE I_IDTIPOENTRADA = ?",
             [itemId],
             (err, result) => {
                 connection.release();
@@ -75,7 +75,7 @@ class Tbl_supervisor {
         getConnection()
         .then((connection) => {
             connection.query(
-            "UPDATE tbl_tipoentrada SET ? WHERE I_IDTIPOENTRADA = ?",
+            "UPDATE tbl_supervisor SET ? WHERE I_IDTIPOENTRADA = ?",
             [updatedItem, itemId],
             (err, result) => {
                 connection.release();
