@@ -64,39 +64,52 @@ class Tbl_supervisor {
         });
     }
     
-    create(newItem, callback) {
+    create(newItem) {
+        return new Promise((resolve, reject) => {
         getConnection()
-        .then((connection) => {
+            .then((connection) => {
             connection.query(
-            "INSERT INTO tbl_supervisor SET ?",
-            newItem,
-            (err, result) => {
+                "INSERT INTO tbl_supervisor SET ?",
+                [newItem],
+                (err, result) => {
                 connection.release();
-                callback(err, result);
-            }
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+                }
             );
-        })
-        .catch((error) => {
-            callback(error, null);
+            })
+            .catch((error) => {
+            reject(error);
+            });
         });
     }
     
-    delete(itemId, callback) {
+    delete(itemId) {
+        return new Promise((resolve, reject) => {
         getConnection()
-        .then((connection) => {
+            .then((connection) => {
             connection.query(
-            "DELETE FROM tbl_supervisor WHERE i_idsupervisor = ?",
-            [itemId],
-            (err, result) => {
+                "DELETE FROM tbl_supervisor WHERE i_idsupervisor = ?",
+                [itemId],
+                (err, result) => {
                 connection.release();
-                callback(err, result);
-            }
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+                }
             );
-        })
-        .catch((error) => {
-            callback(error, null);
+            })
+            .catch((error) => {
+            reject(error);
+            });
         });
     }
+    
     
 }
 
