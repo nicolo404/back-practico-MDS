@@ -19,21 +19,48 @@ class Tbl_supervisor {
             });
         });
     }
-    getById(itemId, callback) {
-        console.log(itemId);
+    getById(itemId) {
+        return new Promise((resolve, reject) => {
         getConnection()
-        .then((connection) => {
+            .then((connection) => {
             connection.query(
-            "SELECT * FROM tbl_supervisor WHERE I_IDTIPOENTRADA = ?",
-            [itemId],
-            (err, result) => {
+                "SELECT * FROM tbl_supervisor WHERE i_idsupervisor = ?",
+                [itemId],
+                (err, result) => {
                 connection.release();
-                callback(err, result);
-            }
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+                }
             );
-        })
-        .catch((error) => {
-            callback(error, null);
+            })
+            .catch((error) => {
+            reject(error);
+            });
+        });
+    }
+    update(itemId, updatedItem) {
+        return new Promise((resolve, reject) => {
+        getConnection()
+            .then((connection) => {
+            connection.query(
+                "UPDATE tbl_supervisor SET ? WHERE i_idsupervisor = ?",
+                [updatedItem, itemId],
+                (err, result) => {
+                connection.release();
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+                }
+            );
+            })
+            .catch((error) => {
+            reject(error);
+            });
         });
     }
     
@@ -58,7 +85,7 @@ class Tbl_supervisor {
         getConnection()
         .then((connection) => {
             connection.query(
-            "DELETE FROM tbl_supervisor WHERE I_IDTIPOENTRADA = ?",
+            "DELETE FROM tbl_supervisor WHERE i_idsupervisor = ?",
             [itemId],
             (err, result) => {
                 connection.release();
@@ -71,22 +98,6 @@ class Tbl_supervisor {
         });
     }
     
-    update(itemId, updatedItem, callback) {
-        getConnection()
-        .then((connection) => {
-            connection.query(
-            "UPDATE tbl_supervisor SET ? WHERE I_IDTIPOENTRADA = ?",
-            [updatedItem, itemId],
-            (err, result) => {
-                connection.release();
-                callback(err, result);
-            }
-            );
-        })
-        .catch((error) => {
-            callback(error, null);
-        });
-    }
 }
 
 module.exports = new Tbl_supervisor();
