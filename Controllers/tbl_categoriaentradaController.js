@@ -9,9 +9,9 @@ class Tbl_categoriaentradaController {
         res.json(error);
         }
     }
-    
     async getById(req, res) {
         try {
+        console.log("controlador: "+req.params.id);
         const data = await Tbl_categoriaentrada.getById(req.params.id);
         res.json(data);
         } catch (error) {
@@ -44,10 +44,12 @@ class Tbl_categoriaentradaController {
         const itemId = req.params.id;
         const updatedItem = req.body;
         const data = await Tbl_categoriaentrada.update(itemId, updatedItem);
-        res.json(data);
+        res.json({message: 'Categoria actualizada', data: data});
         } catch (error) {
         res.json(error);
         }
     }
-    }   
+    }
+
+    
 module.exports = new Tbl_categoriaentradaController();

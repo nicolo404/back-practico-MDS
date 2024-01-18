@@ -7,6 +7,7 @@ class Tbl_categoriaentrada {
             .then((connection) => {
             connection.query("SELECT * FROM tbl_categoriaentrada", (err, result) => {
                 connection.release();
+                console.log(result);
                 if (err) {
                 reject(err);
                 } else {
@@ -19,72 +20,51 @@ class Tbl_categoriaentrada {
             });
         });
     }
-    getById(itemId, callback) {
-        console.log(itemId);
+    getById(itemId) {
+        return new Promise((resolve, reject) => {
         getConnection()
-        .then((connection) => {
+            .then((connection) => {
+                console.log("itemId: "+itemId);
             connection.query(
-            "SELECT * FROM tbl_categoriaentrada WHERE I_IDTIPOENTRADA = ?",
-            [itemId],
-            (err, result) => {
+                "SELECT * FROM tbl_categoriaentrada WHERE I_IDCATENTRADA = ?",
+                [itemId],
+                (err, result) => {
                 connection.release();
-                callback(err, result);
-            }
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                    console.log(result);
+                }
+                }
             );
-        })
-        .catch((error) => {
-            callback(error, null);
+            })
+            .catch((error) => {
+            reject(error);
+            });
         });
     }
-    
-    create(newItem, callback) {
+    update(itemId, updatedItem) {
+        return new Promise((resolve, reject) => {
         getConnection()
-        .then((connection) => {
+            .then((connection) => {
             connection.query(
-            "INSERT INTO tbl_categoriaentrada SET ?",
-            newItem,
-            (err, result) => {
+                "UPDATE tbl_categoriaentrada SET ? WHERE I_IDCATENTRADA = ?",
+                [updatedItem, itemId],
+                (err, result) => {
                 connection.release();
-                callback(err, result);
-            }
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                    console.log(result);
+                }
+                }
             );
-        })
-        .catch((error) => {
-            callback(error, null);
-        });
-    }
-    
-    delete(itemId, callback) {
-        getConnection()
-        .then((connection) => {
-            connection.query(
-            "DELETE FROM tbl_categoriaentrada WHERE I_IDTIPOENTRADA = ?",
-            [itemId],
-            (err, result) => {
-                connection.release();
-                callback(err, result);
-            }
-            );
-        })
-        .catch((error) => {
-            callback(error, null);
-        });
-    }
-    
-    update(itemId, updatedItem, callback) {
-        getConnection()
-        .then((connection) => {
-            connection.query(
-            "UPDATE tbl_categoriaentrada SET ? WHERE I_IDTIPOENTRADA = ?",
-            [updatedItem, itemId],
-            (err, result) => {
-                connection.release();
-                callback(err, result);
-            }
-            );
-        })
-        .catch((error) => {
-            callback(error, null);
+            })
+            .catch((error) => {
+            reject(error);
+            });
         });
     }
 }

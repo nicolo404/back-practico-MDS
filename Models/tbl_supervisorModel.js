@@ -28,10 +28,13 @@ class Tbl_supervisor {
                 [itemId],
                 (err, result) => {
                 connection.release();
+                console.log("Result");
+                console.log(result);
                 if (err) {
                     reject(err);
                 } else {
                     resolve(result);
+                    console.log(result);
                 }
                 }
             );
