@@ -17,50 +17,46 @@ class Tbl_avisomail {
         });
         });
     }
-    getById(itemId, callback) {
-        console.log(itemId);
+    
+    
+    create(newItem) {
+        return new Promise((resolve, reject) => {
         getConnection().then((connection) => {
-        connection.query('SELECT * FROM tbl_avisomail WHERE I_IDAVISOMAIL = ?', [itemId], (err, result) => {
+            connection.query('INSERT INTO tbl_avisomail SET ?', [newItem], (err, result) => {
             connection.release();
-            callback(err, result);
-        });
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+            });
         }).catch((error) => {
-        callback(error, null);
+            reject(error);
+        });
+        });
+    }
+
+    delete(id) {
+        return new Promise((resolve, reject) => {
+        getConnection().then((connection) => {
+            console.log("delete id"+id);
+            connection.query('DELETE FROM tbl_avisomail WHERE i_idpatron = ?', [id], (err, result) => {
+            connection.release();
+            if (err) {
+                console.log("error: "+err);
+                reject(err);
+            } else {
+                console.log("result: "+result);
+                resolve(result);
+            }
+            });
+        }).catch((error) => {
+            console.log("error catch: "+error);
+            reject(error);
+        });
         });
     }
     
-    create(newItem, callback) {
-        getConnection().then((connection) => {
-        connection.query('INSERT INTO tbl_avisomail SET ?', newItem, (err, result) => {
-            connection.release();
-            callback(err, result);
-        });
-        }).catch((error) => {
-        callback(error, null);
-        });
-    }
-    
-    delete(itemId, callback) {
-        getConnection().then((connection) => {
-        connection.query('DELETE FROM tbl_avisomail WHERE I_IDAVISOMAIL = ?', [itemId], (err, result) => {
-            connection.release();
-            callback(err, result);
-        });
-        }).catch((error) => {
-        callback(error, null);
-        });
-    }
-    
-    update(itemId, updatedItem, callback) {
-        getConnection().then((connection) => {
-        connection.query('UPDATE tbl_avisomail SET ? WHERE I_IDAVISOMAIL = ?', [updatedItem, itemId], (err, result) => {
-            connection.release();
-            callback(err, result);
-        });
-        }).catch((error) => {
-        callback(error, null);
-        });
-    }
     }
 
 module.exports = new Tbl_avisomail();

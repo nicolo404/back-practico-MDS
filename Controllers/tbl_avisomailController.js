@@ -10,66 +10,27 @@ class tbl_avisomailController {
         }
       }
 
-    getById(req, res) {
-      const itemId = req.params.id;
-      Tbl_avisomail.getById(itemId, (err, result) => {
-        if (err) {
-          res.status(500).send(`Error al obtener el elemento con ID ${itemId}`);
-        } else {
-          console.log(result);
-          res.json(result[0]);
-        }
-      });
-    }
-  
     async create(req, res) {
-      try {
-        const newItem = req.body;
-        Tbl_avisomail.create(newItem, (err, result) => {
-          if (err) {
-            // Log de error
-            console.error('Error al crear un nuevo elemento:', err);
-    
-            // Enviar respuesta de error al cliente
-            res.status(500).send('Error interno del servidor al crear un nuevo elemento');
-          } else {
-            // Log informativo
-            console.log('Elemento creado con éxito:');
-    
-            // Enviar respuesta con ID del nuevo elemento
-            res.status(201).json({ mensaje: 'Elemento creado con éxito', id: result.insertId });
-          }
-        });
-      } catch (error) {
-        // Este bloque catch captura errores síncronos y no se ejecutará en el contexto asincrónico de la función async
-        console.error('Error al crear un nuevo elemento (síncrono):', error);
-        res.status(500).send('Error interno del servidor al crear un nuevo elemento (síncrono)');
+        try {
+          const newItem = req.body;
+          const result = await Tbl_avisomail.create(newItem);
+          res.json({ message: 'Elemento creado' , result});
+        } catch (error) {
+          res.status(500).send('Error al crear el elemento');
+        }
       }
-    }
-  
-    update(req, res) {
-      const itemId = req.params.id;
-      const updatedItem = req.body;
-      console.log("id: "+itemId+" updatedItem: "+updatedItem);
-      Tbl_avisomail.update(itemId, updatedItem, (err, result) => {
-        if (err) {
-          res.status(500).send(`Error al actualizar el elemento con ID ${itemId}`);
-        } else {
-          res.send('Elemento actualizado con éxito');
+    
+    async delete(req, res) {
+      const { id } = req.params;
+        try {
+          console.log(id);
+          const result = await Tbl_avisomail.delete(id);
+          res.json({ message: 'Elemento eliminado', result });
+        } catch (error) {
+          res.status(500).send('Error al eliminar el elemento '+id);
         }
-      });
-    }
-  
-    delete(req, res) {
-      const itemId = req.params.id;
-      Tbl_avisomail.delete(itemId, (err, result) => {
-        if (err) {
-          res.status(500).send(`Error al eliminar el elemento con ID ${itemId}`);
-        } else {
-          res.send('Elemento eliminado con éxito');
-        }
-      });
-    }
+      }  
+    
     }
     
 module.exports = new tbl_avisomailController();
