@@ -1,4 +1,5 @@
 const Tbl_categoriaentrada = require("../Models/tbl_categoriaentradaModel");
+const moment = require('moment-timezone');
 
 class Tbl_categoriaentradaController {
     async getAll(req, res) {
@@ -18,17 +19,14 @@ class Tbl_categoriaentradaController {
         res.json(error);
         }
     }
-    
     async create(req, res) {
         try {
-        const newItem = req.body;
         const data = await Tbl_categoriaentrada.create(newItem);
         res.json(data);
         } catch (error) {
         res.json(error);
         }
     }
-    
     async delete(req, res) {
         try {
         const itemId = req.params.id;
@@ -38,7 +36,6 @@ class Tbl_categoriaentradaController {
         res.json(error);
         }
     }
-    
     async update(req, res) {
         try {
         const itemId = req.params.id;
@@ -50,6 +47,5 @@ class Tbl_categoriaentradaController {
         }
     }
     }
-
     
 module.exports = new Tbl_categoriaentradaController();

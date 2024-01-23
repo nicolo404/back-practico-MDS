@@ -57,7 +57,6 @@ class Tbl_categoriaentrada {
                     reject(err);
                 } else {
                     resolve(result);
-                    console.log(result);
                 }
                 }
             );
@@ -67,6 +66,51 @@ class Tbl_categoriaentrada {
             });
         });
     }
-}
 
+    create(newItem) {
+        return new Promise((resolve, reject) => {
+        getConnection()
+            .then((connection) => {
+            connection.query(
+                "INSERT INTO tbl_categoriaentrada SET ?",
+                [newItem],
+                (err, result) => {
+                connection.release();
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+                }
+            );
+            })
+            .catch((error) => {
+            reject(error);
+            });
+        });
+    }
+
+    delete(itemId) {
+        return new Promise((resolve, reject) => {
+        getConnection()
+            .then((connection) => {
+            connection.query(
+                "DELETE FROM tbl_categoriaentrada WHERE I_IDCATENTRADA = ?",
+                [itemId],
+                (err, result) => {
+                connection.release();
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+                }
+            );
+            })
+            .catch((error) => {
+            reject(error);
+            });
+        });
+    }      
+}
 module.exports = new Tbl_categoriaentrada();
