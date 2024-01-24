@@ -17,8 +17,7 @@ class Tbl_avisomail {
         });
         });
     }
-    
-    
+        
     create(newItem) {
         return new Promise((resolve, reject) => {
         getConnection().then((connection) => {
@@ -56,6 +55,41 @@ class Tbl_avisomail {
         });
         });
     }
+
+    getById(id) {
+        return new Promise((resolve, reject) => {
+        getConnection().then((connection) => {
+            connection.query('SELECT * FROM tbl_avisomail WHERE i_idpatron = ?', [id], (err, result) => {
+            connection.release();
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+            });
+        }).catch((error) => {
+            reject(error);
+        });
+        });
+    }
+
+    update(id, newItem) {
+        return new Promise((resolve, reject) => {
+        getConnection().then((connection) => {
+            connection.query('UPDATE tbl_avisomail SET ? WHERE i_idpatron = ?', [newItem, id], (err, result) => {
+            connection.release();
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+            });
+        }).catch((error) => {
+            reject(error);
+        });
+        });
+    }
+    
     
     }
 

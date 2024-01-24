@@ -29,7 +29,28 @@ class tbl_avisomailController {
         } catch (error) {
           res.status(500).send('Error al eliminar el elemento '+id);
         }
-      }  
+      }
+      
+      async getById(req, res) {
+        const { id } = req.params;
+        try {
+          const result = await Tbl_avisomail.getById(id);
+          res.json(result);
+        } catch (error) {
+          res.status(500).send('Error al obtener el elemento '+id);
+        }
+      }
+
+      async update(req, res) {
+        const { id } = req.params;
+        const updateItem = req.body;
+        try {
+          const result = await Tbl_avisomail.update(id, updateItem);
+          res.json({ message: 'Elemento actualizado', result });
+        } catch (error) {
+          res.status(500).send('Error al actualizar el elemento '+id);
+        }
+      }
     
     }
     
