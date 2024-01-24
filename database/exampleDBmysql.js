@@ -4,11 +4,10 @@ dotenv.config();
 
 // Configuración del pool de conexiones
 const pool = mysql.createPool({
-  host: '10.200.5.34',
-  user: 'nsilva',
-  password: 'NicoSilva2024@',
-  database: 'entradas_test',
-  timezone: 'America/Santiago',
+  host: '',
+  user: '',
+  password: '',
+  database: '',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,

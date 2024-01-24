@@ -24,7 +24,6 @@ class Tbl_categoriaentrada {
         return new Promise((resolve, reject) => {
         getConnection()
             .then((connection) => {
-                console.log("itemId: "+itemId);
             connection.query(
                 "SELECT * FROM tbl_categoriaentrada WHERE I_IDCATENTRADA = ?",
                 [itemId],
@@ -34,7 +33,6 @@ class Tbl_categoriaentrada {
                     reject(err);
                 } else {
                     resolve(result);
-                    console.log(result);
                 }
                 }
             );
@@ -79,6 +77,8 @@ class Tbl_categoriaentrada {
                 if (err) {
                     reject(err);
                 } else {
+                    console.log("resultado: ");
+                    console.log(result);
                     resolve(result);
                 }
                 }

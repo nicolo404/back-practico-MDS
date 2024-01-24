@@ -21,8 +21,11 @@ class Tbl_categoriaentradaController {
     }
     async create(req, res) {
         try {
+        const newItem = req.body;
+        console.log("controlador: ")
+        console.log(newItem)
         const data = await Tbl_categoriaentrada.create(newItem);
-        res.json(data);
+        res.json({message: 'Categoria creada', data: data});
         } catch (error) {
         res.json(error);
         }
